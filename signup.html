@@ -527,25 +527,21 @@ try{
 setLoading(true);
 
 const response = await fetch(API,{
-
 method:"POST",
-
 headers:{
-
 "Content-Type":"application/json"
-
 },
-
 body:JSON.stringify({
-
 email:userEmail,
-
 referral_code:referral || null
-
 })
-
 });
 
+const text = await response.text();
+
+console.log(text);
+
+const result = JSON.parse(text);
 const result = await response.json();
 
 if(!response.ok){
@@ -594,21 +590,20 @@ result.message ||
 
 );
 
-}catch(error){
+  }catch (error) {
 
 console.error(error);
 
 showMessage(
 
-error.message ||
+error.name + ": " + error.message,
 
-"Something went wrong.",
-
-"#ff5b5b"
+"#ef4444"
 
 );
 
-}finally{
+  }
+finally{
 
 setLoading(false);
 
