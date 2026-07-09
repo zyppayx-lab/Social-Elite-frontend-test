@@ -501,15 +501,82 @@ function setLoading(state) {
 /*=========================================
 SIGNUP
 =========================================*/
-form.addEventListener("submit", function (e) {
+form.addEventListener("submit", async function (e) {
 
     e.preventDefault();
 
-    alert("Submit event fired");
+    showMessage("", "");
 
-    setTimeout(function () {
-        alert("Timer works");
-    }, 1000);
+    const userEmail = email.value.trim().toLowerCase();
+    const referral = referralCode.value.trim();
+
+    if (!userEmail) {
+        showMessage("Email is required.", "#ef4444");
+        return;
+    }
+
+    setLoading(true);
+
+    alert("Before fetch");
+
+    try {
+
+        const response = await fetch(API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: userEmail,
+                referral_code: referral || null
+            })
+        });
+
+        alert("After fetch");
+
+        const result = await response.json();
+
+        alert("Status: " + response.status);
+
+        if (!response.ok) {
+            throw new Error(
+                result.error ||
+                result.message ||
+                "Signup failed."
+            );
+        }
+
+        showMessage(
+            result.message || "OTP sent successfully.",
+            "#22c55e"
+        );
+
+        setTimeout(() => {
+            window.location.href =
+                "verify-otp.html?email=" +
+                encodeURIComponent(userEmail);
+        }, 1200);
+
+    } catch (err) {
+
+        alert(
+            "ERROR\n\n" +
+            "Name: " + err.name +
+            "\nMessage: " + err.message
+        );
+
+        console.error(err);
+
+        showMessage(
+            err.message || "Failed to fetch.",
+            "#ef4444"
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
 
 });
 
