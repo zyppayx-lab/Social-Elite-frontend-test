@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Verify OTP | SocialElite</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* CSS GOES HERE */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--primary:#FFD54A;
+--primary-hover:#FFC107;
+
+--bg:#090909;
+--card:#131313;
+
+--border:rgba(255,255,255,.08);
+
+--text:#ffffff;
+--muted:#b8b8b8;
+
+--success:#22c55e;
+--danger:#ef4444;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+font-family:"Inter",sans-serif;
+
+background:var(--bg);
+
+color:var(--text);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:100vh;
+
+padding:20px;
+
+}
+
+/*=========================
+CONTAINER
+=========================*/
+
+.verify-container{
+
+width:100%;
+max-width:500px;
+
+}
+
+.verify-card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:24px;
+
+padding:45px 35px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+
+}
+
+/*=========================
+LOGO
+=========================*/
+
+.logo{
+
+display:block;
+
+text-align:center;
+
+font-size:34px;
+
+font-weight:800;
+
+text-decoration:none;
+
+color:var(--primary);
+
+margin-bottom:25px;
+
+}
+
+.verify-card h1{
+
+text-align:center;
+
+font-size:34px;
+
+margin-bottom:12px;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+color:var(--muted);
+
+line-height:1.6;
+
+margin-bottom:35px;
+
+}
+
+/*=========================
+FORM
+=========================*/
+
+.input-group{
+
+margin-bottom:22px;
+
+}
+
+.input-group label{
+
+display:block;
+
+margin-bottom:10px;
+
+font-weight:600;
+
+font-size:14px;
+
+}
+
+.input-group input{
+
+width:100%;
+
+height:56px;
+
+padding:0 18px;
+
+background:#0f0f0f;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+color:#fff;
+
+font-size:15px;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.input-group input:focus{
+
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(255,213,74,.15);
+
+}
+
+.input-group input::placeholder{
+
+color:#7d7d7d;
+
+}
+
+input[readonly]{
+
+cursor:not-allowed;
+
+opacity:.85;
+
+}
+
+/*=========================
+OTP
+=========================*/
+
+.otp-boxes{
+
+display:flex;
+
+justify-content:space-between;
+
+gap:10px;
+
+}
+
+.otp-input{
+
+width:55px !important;
+
+height:60px !important;
+
+padding:0 !important;
+
+text-align:center;
+
+font-size:24px !important;
+
+font-weight:700;
+
+}
+
+/*=========================
+BUTTON
+=========================*/
+
+.verify-btn{
+
+width:100%;
+
+height:56px;
+
+margin-top:10px;
+
+border:none;
+
+border-radius:14px;
+
+background:var(--primary);
+
+color:#000;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:12px;
+
+}
+
+.verify-btn:hover{
+
+background:var(--primary-hover);
+
+transform:translateY(-2px);
+
+}
+
+.verify-btn:disabled{
+
+opacity:.7;
+
+cursor:not-allowed;
+
+transform:none;
+
+}
+
+/*=========================
+LOADER
+=========================*/
+
+.loader{
+
+width:18px;
+
+height:18px;
+
+border:3px solid rgba(0,0,0,.2);
+
+border-top-color:#000;
+
+border-radius:50%;
+
+animation:spin .8s linear infinite;
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/*=========================
+MESSAGE
+=========================*/
+
+#message{
+
+margin-top:22px;
+
+text-align:center;
+
+font-size:15px;
+
+font-weight:600;
+
+min-height:22px;
+
+line-height:1.5;
+
+}
+
+/*=========================
+BOTTOM
+=========================*/
+
+.bottom-links{
+
+margin-top:35px;
+
+text-align:center;
+
+}
+
+.bottom-links p{
+
+color:var(--muted);
+
+}
+
+.bottom-links a{
+
+color:var(--primary);
+
+font-weight:700;
+
+text-decoration:none;
+
+}
+
+.bottom-links a:hover{
+
+text-decoration:underline;
+
+}
+
+/*=========================
+RESPONSIVE
+=========================*/
+
+@media(max-width:520px){
+
+.verify-card{
+
+padding:35px 22px;
+
+}
+
+.verify-card h1{
+
+font-size:28px;
+
+}
+
+.logo{
+
+font-size:30px;
+
+}
+
+.otp-boxes{
+
+gap:6px;
+
+}
+
+.otp-input{
+
+width:46px !important;
+
+height:56px !important;
+
+font-size:22px !important;
+
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="verify-container">
+
+<div class="verify-card">
+
+<a href="index.html" class="logo">
+
+SocialElite
+
+</a>
+
+<h1>Verify Email</h1>
+
+<p class="subtitle">
+
+Enter the 6-digit verification code sent to your email and create your password.
+
+</p>
+
+<form id="verifyForm">
+
+<div class="input-group">
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="email"
+readonly
+>
+
+</div>
+
+<div class="input-group">
+
+<label>Verification Code</label>
+
+<div class="otp-boxes">
+
+<input type="text" maxlength="1" class="otp-input">
+
+<input type="text" maxlength="1" class="otp-input">
+
+<input type="text" maxlength="1" class="otp-input">
+
+<input type="text" maxlength="1" class="otp-input">
+
+<input type="text" maxlength="1" class="otp-input">
+
+<input type="text" maxlength="1" class="otp-input">
+
+</div>
+
+</div>
+
+<div class="input-group">
+
+<label>Create Password</label>
+
+<input
+type="password"
+id="password"
+placeholder="Create a strong password"
+required
+>
+
+</div>
+
+<div class="input-group">
+
+<label>Confirm Password</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm password"
+required
+>
+
+</div>
+
+<button
+type="submit"
+id="verifyBtn"
+class="verify-btn"
+>
+
+<span id="btnText">
+
+Verify Account
+
+</span>
+
+<span id="loader" class="loader hidden"></span>
+
+</button>
+
+</form>
+
+<div id="message"></div>
+
+<div class="bottom-links">
+
+<p>
+
+Didn't receive the code?
+
+<a href="#" id="resendOtp">
+
+Resend OTP
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* JAVASCRIPT GOES HERE */
+"use strict";
+
+/*==========================
+CONFIG
+==========================*/
+
+const VERIFY_API =
+"https://dohxtukzxopwkvxeppdl.supabase.co/functions/v1/verify-signup-otp";
+
+const RESEND_API =
+"https://dohxtukzxopwkvxeppdl.supabase.co/functions/v1/send-signup-otp";
+
+/*==========================
+ELEMENTS
+==========================*/
+
+const form = document.getElementById("verifyForm");
+
+const email = document.getElementById("email");
+
+const password = document.getElementById("password");
+
+const confirmPassword = document.getElementById("confirmPassword");
+
+const verifyBtn = document.getElementById("verifyBtn");
+
+const btnText = document.getElementById("btnText");
+
+const loader = document.getElementById("loader");
+
+const message = document.getElementById("message");
+
+const resendOtp = document.getElementById("resendOtp");
+
+const otpInputs = document.querySelectorAll(".otp-input");
+
+/*==========================
+LOAD EMAIL
+==========================*/
+
+const params = new URLSearchParams(window.location.search);
+
+const userEmail = params.get("email");
+
+if(!userEmail){
+
+alert("Invalid verification link.");
+
+window.location.href = "signup.html";
+
+}
+
+email.value = userEmail;
+
+/*==========================
+MESSAGE
+==========================*/
+
+function showMessage(text,color){
+
+message.textContent = text;
+
+message.style.color = color;
+
+}
+
+/*==========================
+LOADING
+==========================*/
+
+function setLoading(state){
+
+verifyBtn.disabled = state;
+
+loader.classList.toggle("hidden",!state);
+
+btnText.textContent = state ? "Verifying..." : "Verify Account";
+
+}
+
+/*==========================
+OTP INPUT
+==========================*/
+
+otpInputs.forEach((input,index)=>{
+
+input.addEventListener("input",(e)=>{
+
+e.target.value=e.target.value.replace(/[^0-9]/g,"");
+
+if(e.target.value && index<otpInputs.length-1){
+
+otpInputs[index+1].focus();
+
+}
+
+});
+
+input.addEventListener("keydown",(e)=>{
+
+if(e.key==="Backspace" && !input.value && index>0){
+
+otpInputs[index-1].focus();
+
+}
+
+});
+
+});
+
+otpInputs[0].addEventListener("paste",(e)=>{
+
+e.preventDefault();
+
+const pasted=(e.clipboardData||window.clipboardData)
+
+.getData("text")
+
+.replace(/\D/g,"")
+
+.slice(0,6);
+
+pasted.split("").forEach((digit,index)=>{
+
+if(otpInputs[index]){
+
+otpInputs[index].value=digit;
+
+}
+
+});
+
+});
+
+/*==========================
+VERIFY
+==========================*/
+
+form.addEventListener("submit",async(e)=>{
+
+e.preventDefault();
+
+showMessage("","");
+
+const otp=[...otpInputs]
+
+.map(input=>input.value)
+
+.join("");
+
+if(otp.length!==6){
+
+showMessage("Enter the 6-digit OTP.","#ef4444");
+
+return;
+
+}
+
+if(password.value.length<6){
+
+showMessage("Password must be at least 6 characters.","#ef4444");
+
+return;
+
+}
+
+if(password.value!==confirmPassword.value){
+
+showMessage("Passwords do not match.","#ef4444");
+
+return;
+
+}
+
+try{
+
+setLoading(true);
+
+const response=await fetch(VERIFY_API,{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+email:userEmail,
+
+password:password.value,
+
+otp
+
+})
+
+});
+
+const result=await response.json();
+
+if(!response.ok){
+
+throw new Error(
+
+result.error ||
+
+result.message ||
+
+"Verification failed."
+
+);
+
+}
+
+if(result.success){
+
+showMessage(
+
+result.message || "Account created successfully.",
+
+"#22c55e"
+
+);
+
+setTimeout(()=>{
+
+window.location.href="dashboard.html";
+
+},1500);
+
+return;
+
+}
+
+throw new Error(
+
+result.error ||
+
+result.message ||
+
+"Verification failed."
+
+);
+
+}catch(error){
+
+console.error(error);
+
+showMessage(
+
+error.message ||
+
+"Something went wrong.",
+
+"#ef4444"
+
+);
+
+}finally{
+
+setLoading(false);
+
+}
+
+});
+
+/*==========================
+RESEND OTP
+==========================*/
+
+resendOtp.addEventListener("click",async(e)=>{
+
+e.preventDefault();
+
+showMessage("","");
+
+try{
+
+resendOtp.style.pointerEvents="none";
+
+resendOtp.textContent="Sending...";
+
+const response=await fetch(RESEND_API,{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+email:userEmail
+
+})
+
+});
+
+const result=await response.json();
+
+if(!response.ok){
+
+throw new Error(
+
+result.error ||
+
+result.message ||
+
+"Unable to resend OTP."
+
+);
+
+}
+
+showMessage(
+
+result.message || "OTP sent successfully.",
+
+"#22c55e"
+
+);
+
+}catch(error){
+
+showMessage(
+
+error.message ||
+
+"Unable to resend OTP.",
+
+"#ef4444"
+
+);
+
+}finally{
+
+resendOtp.textContent="Resend OTP";
+
+resendOtp.style.pointerEvents="auto";
+
+}
+
+});
+</script>
+
+</body>
+
+  </html>
