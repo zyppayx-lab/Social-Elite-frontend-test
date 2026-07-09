@@ -449,165 +449,168 @@ Already have an account?
 /* JAVASCRIPT GOES HERE */
 "use strict";
 
-/*==========================
+/*=========================================
 CONFIG
-==========================*/
+=========================================*/
 
-const API =
-"https://dohxtukzxopwkvxeppdl.supabase.co/functions/v1/verify-signup-otp/functions/v1/send-signup-otp";
+const API = "https://dohxtukzxopwkvxeppdl.supabase.co/functions/v1/send-signup-otp";
 
-/*==========================
+/*=========================================
 ELEMENTS
-==========================*/
+=========================================*/
 
 const form = document.getElementById("signupForm");
-
 const email = document.getElementById("email");
-
 const referralCode = document.getElementById("referralCode");
 
 const signupBtn = document.getElementById("signupBtn");
-
 const btnText = document.getElementById("btnText");
-
 const loader = document.getElementById("loader");
 
 const message = document.getElementById("message");
 
-/*==========================
-MESSAGE
-==========================*/
+/*=========================================
+CHECK PAGE
+=========================================*/
 
-function showMessage(text, color){
-
-message.textContent = text;
-
-message.style.color = color;
-
+if (!form) {
+    alert("signupForm not found.");
+    throw new Error("signupForm not found.");
 }
 
-/*==========================
-LOADING
-==========================*/
+/*=========================================
+HELPERS
+=========================================*/
 
-function setLoading(state){
-
-signupBtn.disabled = state;
-
-loader.classList.toggle("hidden", !state);
-
-btnText.textContent = state ? "Sending OTP..." : "Send OTP";
-
+function showMessage(text, color) {
+    message.textContent = text;
+    message.style.color = color;
 }
 
-/*==========================
+function setLoading(state) {
+
+    signupBtn.disabled = state;
+
+    loader.classList.toggle("hidden", !state);
+
+    btnText.textContent = state
+        ? "Sending OTP..."
+        : "Send OTP";
+}
+
+/*=========================================
 SIGNUP
-==========================*/
+=========================================*/
 
-form.addEventListener("submit", async function(e){
+form.addEventListener("submit", async function (e) {
 
-e.preventDefault();
+    e.preventDefault();
 
-showMessage("", "");
+    showMessage("", "");
 
-const userEmail = email.value.trim().toLowerCase();
+    const userEmail = email.value.trim().toLowerCase();
 
-const referral = referralCode.value.trim();
+    const referral = referralCode.value.trim();
 
-if(userEmail === ""){
+    if (!userEmail) {
 
-showMessage("Email is required.","#ff5b5b");
+        showMessage("Email is required.", "#ef4444");
 
-return;
+        return;
 
-}
+    }
 
-try{
+    try {
 
-setLoading(true);
-alert("About to send request");
-const response = await fetch(API,{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-email:userEmail,
-referral_code:referral || null
-})
-});
-alert("Response received");
-const text = await response.text();
+        setLoading(true);
 
-console.log(text);
+        const response = await fetch(API, {
 
-const result = JSON.parse(text);
-const result = await response.json();
+            method: "POST",
 
-if(!response.ok){
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-throw new Error(
+            body: JSON.stringify({
 
-result.error ||
+                email: userEmail,
 
-result.message ||
+                referral_code: referral || null
 
-"Signup failed."
+            })
 
-);
+        });
 
-}
+        const result = await response.json();
 
-if(result.success){
+        if (!response.ok) {
 
-showMessage(
+            throw new Error(
 
-result.message || "OTP sent successfully.",
+                result.error ||
 
-"#34d399"
+                result.message ||
 
-);
+                "Signup failed."
 
-setTimeout(()=>{
+            );
 
-window.location.href =
+        }
 
-`verify-otp.html?email=${encodeURIComponent(userEmail)}`;
+        if (result.success) {
 
-},1200);
+            showMessage(
 
-return;
+                result.message ||
 
-}
+                "OTP sent successfully.",
 
-throw new Error(
+                "#22c55e"
 
-result.error ||
+            );
 
-result.message ||
+            setTimeout(function () {
 
-"Signup failed."
+                window.location.href =
+                    "verify-otp.html?email=" +
+                    encodeURIComponent(userEmail);
 
-);
+            }, 1200);
 
-  }catch (error) {
+            return;
 
-console.error(error);
+        }
 
-showMessage(
+        throw new Error(
 
-error.name + ": " + error.message,
+            result.error ||
 
-"#ef4444"
+            result.message ||
 
-);
+            "Signup failed."
 
-  }
-finally{
+        );
 
-setLoading(false);
+    } catch (error) {
 
-}
+        console.error(error);
+
+        showMessage(
+
+            error.message ||
+
+            "Unable to connect to server.",
+
+            "#ef4444"
+
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
 
 });
 </script>
