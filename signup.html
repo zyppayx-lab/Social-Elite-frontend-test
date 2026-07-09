@@ -501,114 +501,18 @@ function setLoading(state) {
 /*=========================================
 SIGNUP
 =========================================*/
-
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", function (e) {
 
     e.preventDefault();
 
-    showMessage("", "");
+    alert("Submit event fired");
 
-    const userEmail = email.value.trim().toLowerCase();
-
-    const referral = referralCode.value.trim();
-
-    if (!userEmail) {
-
-        showMessage("Email is required.", "#ef4444");
-
-        return;
-
-    }
-
-    try {
-
-        setLoading(true)
-        
-    const response = await fetch(API, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            email: "test@test.com"
-        })
-    });
-
-    alert("Fetch completed");
-} catch (e) {
-    alert("Error: " + e.message);
-    }
-
-        if (!response.ok) {
-
-            throw new Error(
-
-                result.error ||
-
-                result.message ||
-
-                "Signup failed."
-
-            );
-
-        }
-
-        if (result.success) {
-
-            showMessage(
-
-                result.message ||
-
-                "OTP sent successfully.",
-
-                "#22c55e"
-
-            );
-
-            setTimeout(function () {
-
-                window.location.href =
-                    "verify-otp.html?email=" +
-                    encodeURIComponent(userEmail);
-
-            }, 1200);
-
-            return;
-
-        }
-
-        throw new Error(
-
-            result.error ||
-
-            result.message ||
-
-            "Signup failed."
-
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-
-            error.message ||
-
-            "Unable to connect to server.",
-
-            "#ef4444"
-
-        );
-
-    } finally {
-
-        setLoading(false);
-
-    }
+    setTimeout(function () {
+        alert("Timer works");
+    }, 1000);
 
 });
+
 </script>
 
 </body>
