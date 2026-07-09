@@ -522,22 +522,23 @@ form.addEventListener("submit", async function (e) {
 
     try {
 
-        setLoading(true);
+        setLoading(true)
+        
+    const response = await fetch(API, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: "test@test.com"
+        })
+    });
 
-alert(API);
-
-const response = await fetch(API, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        email: "test@test.com"
-    })
-});
-
-alert(response.status);
-        const result = await response.json();
+    alert("Fetch completed");
+} catch (e) {
+    alert("Error: " + e.message);
+    }
 
         if (!response.ok) {
 
