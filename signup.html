@@ -525,7 +525,7 @@ return;
 try{
 
 setLoading(true);
-
+alert("About to send request");
 const response = await fetch(API,{
 method:"POST",
 headers:{
@@ -536,7 +536,7 @@ email:userEmail,
 referral_code:referral || null
 })
 });
-
+alert("Response received");
 const text = await response.text();
 
 console.log(text);
