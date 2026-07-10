@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | SocialElite</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* PASTE CSS HERE */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--primary:#FFD54A;
+--primary-hover:#FFC107;
+
+--bg:#090909;
+--card:#131313;
+
+--border:rgba(255,255,255,.08);
+
+--text:#ffffff;
+--muted:#b8b8b8;
+
+}
+
+body{
+
+font-family:"Inter",sans-serif;
+
+background:var(--bg);
+
+color:var(--text);
+
+min-height:100vh;
+
+padding-bottom:90px;
+
+}
+
+/*==========================
+TOP BAR
+==========================*/
+
+.topbar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:22px;
+
+}
+
+.logo{
+
+text-decoration:none;
+
+font-size:28px;
+
+font-weight:800;
+
+color:var(--primary);
+
+}
+
+.notification{
+
+font-size:26px;
+
+text-decoration:none;
+
+}
+
+/*==========================
+DASHBOARD
+==========================*/
+
+.dashboard{
+
+padding:20px;
+
+max-width:520px;
+
+margin:auto;
+
+}
+
+/*==========================
+BALANCE CARD
+==========================*/
+
+.balance-card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:22px;
+
+padding:35px 20px;
+
+text-align:center;
+
+margin-bottom:18px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.30);
+
+}
+
+.balance-label{
+
+font-size:15px;
+
+color:var(--muted);
+
+margin-bottom:12px;
+
+}
+
+#balance{
+
+font-size:40px;
+
+font-weight:800;
+
+color:var(--primary);
+
+}
+
+/*==========================
+TRANSACTION
+==========================*/
+
+.transaction-btn{
+
+display:block;
+
+text-align:center;
+
+background:#1b1b1b;
+
+border:1px solid var(--border);
+
+padding:16px;
+
+border-radius:16px;
+
+text-decoration:none;
+
+color:#fff;
+
+font-weight:700;
+
+margin-bottom:22px;
+
+transition:.3s;
+
+}
+
+.transaction-btn:hover{
+
+background:#222;
+
+}
+
+/*==========================
+ACTION BUTTONS
+==========================*/
+
+.quick-actions{
+
+display:grid;
+
+gap:16px;
+
+}
+
+.action-card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:22px;
+
+text-decoration:none;
+
+color:#fff;
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+font-size:18px;
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+.action-card:hover{
+
+border-color:var(--primary);
+
+transform:translateY(-2px);
+
+}
+
+.action-card span{
+
+flex:1;
+
+}
+
+/*==========================
+BOTTOM NAVIGATION
+==========================*/
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+height:72px;
+
+background:#101010;
+
+border-top:1px solid var(--border);
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+}
+
+.bottom-nav a{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:4px;
+
+text-decoration:none;
+
+color:#8d8d8d;
+
+font-size:13px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.bottom-nav a.active{
+
+color:var(--primary);
+
+}
+
+.bottom-nav a:hover{
+
+color:#fff;
+
+}
+
+.bottom-nav span{
+
+font-size:12px;
+
+}
+
+/*==========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:500px){
+
+#balance{
+
+font-size:34px;
+
+}
+
+.logo{
+
+font-size:24px;
+
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+<a href="#" class="logo">
+SocialElite
+</a>
+
+<a href="notification.html" class="notification">
+
+🔔
+
+</a>
+
+</header>
+
+<main class="dashboard">
+
+<div class="balance-card">
+
+<p class="balance-label">
+
+Available Balance
+
+</p>
+
+<h1 id="balance">
+
+₦0.00
+
+</h1>
+
+</div>
+
+<a
+href="transaction.html"
+class="transaction-btn"
+>
+
+Transaction History
+
+</a>
+
+<div class="quick-actions">
+
+<a href="deposit.html" class="action-card">
+
+💳
+
+<span>
+
+Deposit
+
+</span>
+
+</a>
+
+<a
+href="purchase-social-media.html"
+class="action-card"
+>
+
+📱
+
+<span>
+
+Social Media Accounts
+
+</span>
+
+</a>
+
+<a
+href="referral.html"
+class="action-card"
+>
+
+🎁
+
+<span>
+
+Refer & Earn
+
+</span>
+
+</a>
+
+</div>
+
+</main>
+
+<nav class="bottom-nav">
+
+<a href="dashboard.html" class="active">
+
+🏠
+
+<span>Home</span>
+
+</a>
+
+<a href="marketplace.html">
+
+🛒
+
+<span>Marketplace</span>
+
+</a>
+
+<a href="profile.html">
+
+👤
+
+<span>Profile</span>
+
+</a>
+
+<a href="referral.html">
+
+🎁
+
+<span>Referral</span>
+
+</a>
+
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/* Your dashboard JavaScript goes here */
+"use strict";
+
+/*=========================================
+SUPABASE
+=========================================*/
+
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+/*=========================================
+ELEMENTS
+=========================================*/
+
+const balance = document.getElementById("balance");
+
+/*=========================================
+LOAD DASHBOARD
+=========================================*/
+
+async function loadDashboard() {
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+
+    window.location.href = "login.html";
+
+    return;
+
+  }
+
+  const userId = session.user.id;
+
+  const { data: wallet, error } = await supabase
+    .from("wallets")
+    .select("available_balance")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) {
+
+    console.error(error);
+
+    balance.textContent = "₦0.00";
+
+    return;
+
+  }
+
+  const amount = wallet?.available_balance ?? 0;
+
+  balance.textContent =
+    "₦" +
+    Number(amount).toLocaleString("en-NG", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+}
+
+loadDashboard();
+</script>
+
+</body>
+
+  </html>
