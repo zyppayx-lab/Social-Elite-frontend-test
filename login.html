@@ -450,7 +450,6 @@ ELEMENTS
 =========================================*/
 
 const form = document.getElementById("loginForm");
-
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 
@@ -484,43 +483,61 @@ function setLoading(state) {
 LOGIN
 =========================================*/
 
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async function (e) {
 
     e.preventDefault();
 
     showMessage("", "");
 
-    setLoading(true);
+    const userEmail = email.value.trim().toLowerCase();
+    const userPassword = password.value;
+
+    if (!userEmail || !userPassword) {
+
+        showMessage(
+            "Email and password are required.",
+            "#ef4444"
+        );
+
+        return;
+
+    }
 
     try {
 
-        const { error } = await supabase.auth.signInWithPassword({
+        setLoading(true);
 
-            email: email.value.trim().toLowerCase(),
+        const { data, error } =
+            await supabase.auth.signInWithPassword({
 
-            password: password.value
+                email: userEmail,
 
-        });
+                password: userPassword
 
-        if (error) throw error;
+            });
+
+        if (error) {
+            throw error;
+        }
 
         showMessage(
             "Login successful.",
             "#22c55e"
         );
 
-        setTimeout(() => {
+        setTimeout(function () {
 
             window.location.href = "dashboard.html";
 
         }, 1000);
 
-    } catch (err) {
+    } catch (error) {
 
-        console.error(err);
+        console.error(error);
 
         showMessage(
-            err.message,
+            error.message ||
+            "Login failed.",
             "#ef4444"
         );
 
@@ -531,7 +548,7 @@ form.addEventListener("submit", async (e) => {
     }
 
 });
-</script>
+
 </script>
 
 </body>
