@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Session Test</title>
+
+</head>
+
+<body>
+
+<h2>Testing Session...</h2>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://dohxtukzxopwkvxeppdl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+
+const supabase =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
+
+(async()=>{
+
+const {
+data:{session},
+error
+}=await supabase.auth.getSession();
+
+if(error){
+
+alert("ERROR");
+
+alert(error.message);
+
+return;
+
+}
+
+if(!session){
+
+alert("NO SESSION");
+
+return;
+
+}
+
+alert("SESSION FOUND");
+
+alert(session.user.email);
+
+})();
+</script>
+
+</body>
+
+</html>
