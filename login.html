@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Login | SocialElite</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* PASTE CSS HERE */
+/* ==========================
+CSS PLACEHOLDER
+========================== */
 *{
 margin:0;
 padding:0;
@@ -61,14 +69,14 @@ padding:20px;
 
 }
 
-.signup-container{
+.login-container{
 
 width:100%;
 max-width:480px;
 
 }
 
-.signup-card{
+.login-card{
 
 background:var(--card);
 
@@ -100,7 +108,7 @@ margin-bottom:25px;
 
 }
 
-.signup-card h1{
+.login-card h1{
 
 text-align:center;
 
@@ -180,7 +188,7 @@ color:#7f7f7f;
 
 }
 
-.signup-btn{
+.login-btn{
 
 width:100%;
 
@@ -214,7 +222,7 @@ margin-top:10px;
 
 }
 
-.signup-btn:hover{
+.login-btn:hover{
 
 background:var(--primary-hover);
 
@@ -222,7 +230,7 @@ transform:translateY(-2px);
 
 }
 
-.signup-btn:disabled{
+.login-btn:disabled{
 
 opacity:.7;
 
@@ -316,13 +324,13 @@ text-decoration:underline;
 
 @media(max-width:500px){
 
-.signup-card{
+.login-card{
 
 padding:35px 22px;
 
 }
 
-.signup-card h1{
+.login-card h1{
 
 font-size:28px;
 
@@ -335,16 +343,15 @@ font-size:30px;
 }
 
 }
-
 </style>
 
 </head>
 
 <body>
 
-<div class="signup-container">
+<div class="login-container">
 
-<div class="signup-card">
+<div class="login-card">
 
 <a href="index.html" class="logo">
 SocialElite
@@ -353,7 +360,7 @@ SocialElite
 <h1>Welcome Back</h1>
 
 <p class="subtitle">
-Login to your SocialElite account.
+Login to continue to your SocialElite account.
 </p>
 
 <form id="loginForm">
@@ -365,7 +372,7 @@ Login to your SocialElite account.
 <input
 type="email"
 id="email"
-placeholder="Enter your email address"
+placeholder="Enter your email"
 required
 >
 
@@ -387,7 +394,7 @@ required
 <button
 type="submit"
 id="loginBtn"
-class="signup-btn"
+class="login-btn"
 >
 
 <span id="btnText">
@@ -405,18 +412,27 @@ Login
 <div class="bottom-links">
 
 <p>
+
 <a href="forgot-password.html">
+
 Forgot Password?
+
 </a>
+
 </p>
 
 <br>
 
 <p>
+
 Don't have an account?
+
 <a href="signup.html">
+
 Create Account
+
 </a>
+
 </p>
 
 </div>
@@ -424,17 +440,24 @@ Create Account
 </div>
 
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
+/* ==========================
+JAVASCRIPT PLACEHOLDER
+========================== */
 "use strict";
 
 /*=========================================
-SUPABASE CONFIG
+SUPABASE
 =========================================*/
 
 const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
 const supabase = window.supabase.createClient(
     SUPABASE_URL,
@@ -448,10 +471,13 @@ ELEMENTS
 const form = document.getElementById("loginForm");
 
 const email = document.getElementById("email");
+
 const password = document.getElementById("password");
 
 const loginBtn = document.getElementById("loginBtn");
+
 const btnText = document.getElementById("btnText");
+
 const loader = document.getElementById("loader");
 
 const message = document.getElementById("message");
@@ -460,12 +486,15 @@ const message = document.getElementById("message");
 HELPERS
 =========================================*/
 
-function showMessage(text, color) {
+function showMessage(text, color){
+
     message.textContent = text;
+
     message.style.color = color;
+
 }
 
-function setLoading(state) {
+function setLoading(state){
 
     loginBtn.disabled = state;
 
@@ -474,13 +503,14 @@ function setLoading(state) {
     btnText.textContent = state
         ? "Logging in..."
         : "Login";
+
 }
 
 /*=========================================
 LOGIN
 =========================================*/
 
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async (e)=>{
 
     e.preventDefault();
 
@@ -488,9 +518,10 @@ form.addEventListener("submit", async (e) => {
 
     setLoading(true);
 
-    try {
+    try{
 
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } =
+        await supabase.auth.signInWithPassword({
 
             email: email.value.trim().toLowerCase(),
 
@@ -498,20 +529,28 @@ form.addEventListener("submit", async (e) => {
 
         });
 
-        if (error) throw error;
+        if(error) throw error;
+
+        if(!data.session){
+
+            throw new Error("Login failed.");
+
+        }
 
         showMessage(
             "Login successful.",
             "#22c55e"
         );
 
-        setTimeout(() => {
+        setTimeout(()=>{
 
             window.location.href = "dashboard.html";
 
-        }, 1000);
+        },800);
 
-    } catch (err) {
+    }
+
+    catch(err){
 
         console.error(err);
 
@@ -520,7 +559,9 @@ form.addEventListener("submit", async (e) => {
             "#ef4444"
         );
 
-    } finally {
+    }
+
+    finally{
 
         setLoading(false);
 
@@ -528,5 +569,7 @@ form.addEventListener("submit", async (e) => {
 
 });
 </script>
+
 </body>
-  </html>
+
+    </html>
