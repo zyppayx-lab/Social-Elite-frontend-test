@@ -455,17 +455,41 @@ Refer & Earn
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
+<script>
 /* Your dashboard JavaScript goes here */
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
 
-<script>
-alert("1");
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
-console.log(window.supabase);
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
-alert("2");
+(async () => {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    alert("Session Error: " + error.message);
+    return;
+  }
+
+  if (!session) {
+    alert("No session found");
+    return;
+  }
+
+  alert(
+    "Logged in\n\nEmail: " +
+    session.user.email +
+    "\n\nID: " +
+    session.user.id
+  );
+})();
 </script>
 
 </body>
