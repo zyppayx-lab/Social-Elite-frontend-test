@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | SocialElite</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* PASTE CSS HERE */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--primary:#FFD54A;
+--primary-hover:#FFC107;
+
+--bg:#090909;
+--card:#131313;
+
+--border:rgba(255,255,255,.08);
+
+--text:#ffffff;
+--muted:#b8b8b8;
+
+--radius:18px;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+font-family:"Inter",sans-serif;
+
+background:var(--bg);
+
+color:var(--text);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+min-height:100vh;
+
+padding:20px;
+
+}
+
+.signup-container{
+
+width:100%;
+max-width:480px;
+
+}
+
+.signup-card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:24px;
+
+padding:45px 35px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+
+}
+
+.logo{
+
+display:block;
+
+text-align:center;
+
+font-size:34px;
+
+font-weight:800;
+
+text-decoration:none;
+
+color:var(--primary);
+
+margin-bottom:25px;
+
+}
+
+.signup-card h1{
+
+text-align:center;
+
+font-size:34px;
+
+margin-bottom:12px;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+color:var(--muted);
+
+font-size:15px;
+
+line-height:1.6;
+
+margin-bottom:35px;
+
+}
+
+.input-group{
+
+margin-bottom:22px;
+
+}
+
+.input-group label{
+
+display:block;
+
+font-size:14px;
+
+font-weight:600;
+
+margin-bottom:10px;
+
+}
+
+.input-group input{
+
+width:100%;
+
+height:56px;
+
+padding:0 18px;
+
+background:#0f0f0f;
+
+border:1px solid var(--border);
+
+border-radius:14px;
+
+color:#fff;
+
+font-size:15px;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.input-group input:focus{
+
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(255,213,74,.15);
+
+}
+
+.input-group input::placeholder{
+
+color:#7f7f7f;
+
+}
+
+.signup-btn{
+
+width:100%;
+
+height:56px;
+
+border:none;
+
+border-radius:14px;
+
+background:var(--primary);
+
+color:#000;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:12px;
+
+margin-top:10px;
+
+}
+
+.signup-btn:hover{
+
+background:var(--primary-hover);
+
+transform:translateY(-2px);
+
+}
+
+.signup-btn:disabled{
+
+opacity:.7;
+
+cursor:not-allowed;
+
+transform:none;
+
+}
+
+.loader{
+
+width:18px;
+
+height:18px;
+
+border:3px solid rgba(0,0,0,.25);
+
+border-top-color:#000;
+
+border-radius:50%;
+
+animation:spin .8s linear infinite;
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+#message{
+
+margin-top:22px;
+
+text-align:center;
+
+font-size:15px;
+
+font-weight:600;
+
+min-height:22px;
+
+line-height:1.5;
+
+}
+
+.bottom-links{
+
+margin-top:35px;
+
+text-align:center;
+
+}
+
+.bottom-links p{
+
+color:var(--muted);
+
+font-size:15px;
+
+margin-bottom:8px;
+
+}
+
+.bottom-links a{
+
+color:var(--primary);
+
+text-decoration:none;
+
+font-weight:700;
+
+}
+
+.bottom-links a:hover{
+
+text-decoration:underline;
+
+}
+
+@media(max-width:500px){
+
+.signup-card{
+
+padding:35px 22px;
+
+}
+
+.signup-card h1{
+
+font-size:28px;
+
+}
+
+.logo{
+
+font-size:30px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="signup-container">
+
+<div class="signup-card">
+
+<a href="index.html" class="logo">
+SocialElite
+</a>
+
+<h1>Welcome Back</h1>
+
+<p class="subtitle">
+Login to your SocialElite account.
+</p>
+
+<form id="loginForm">
+
+<div class="input-group">
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="email"
+placeholder="Enter your email address"
+required
+>
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+required
+>
+
+</div>
+
+<button
+type="submit"
+id="loginBtn"
+class="signup-btn"
+>
+
+<span id="btnText">
+Login
+</span>
+
+<span id="loader" class="loader hidden"></span>
+
+</button>
+
+</form>
+
+<div id="message"></div>
+
+<div class="bottom-links">
+
+<p>
+<a href="forgot-password.html">
+Forgot Password?
+</a>
+</p>
+
+<br>
+
+<p>
+Don't have an account?
+<a href="signup.html">
+Create Account
+</a>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* PASTE JAVASCRIPT HERE */
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+"use strict";
+
+/*=========================================
+SUPABASE CONFIG
+=========================================*/
+
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvaHh0dWt6eG9wd2t2eGVwcGRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxOTA5NzksImV4cCI6MjA5ODc2Njk3OX0.EvzBxG--UmAIDL6dX-cU878tjRRHacazKv9mbEsGgWY";
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+/*=========================================
+ELEMENTS
+=========================================*/
+
+const form = document.getElementById("loginForm");
+
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+
+const loginBtn = document.getElementById("loginBtn");
+const btnText = document.getElementById("btnText");
+const loader = document.getElementById("loader");
+
+const message = document.getElementById("message");
+
+/*=========================================
+HELPERS
+=========================================*/
+
+function showMessage(text, color) {
+    message.textContent = text;
+    message.style.color = color;
+}
+
+function setLoading(state) {
+
+    loginBtn.disabled = state;
+
+    loader.classList.toggle("hidden", !state);
+
+    btnText.textContent = state
+        ? "Logging in..."
+        : "Login";
+}
+
+/*=========================================
+LOGIN
+=========================================*/
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    showMessage("", "");
+
+    setLoading(true);
+
+    try {
+
+        const { error } = await supabase.auth.signInWithPassword({
+
+            email: email.value.trim().toLowerCase(),
+
+            password: password.value
+
+        });
+
+        if (error) throw error;
+
+        showMessage(
+            "Login successful.",
+            "#22c55e"
+        );
+
+        setTimeout(() => {
+
+            window.location.href = "dashboard.html";
+
+        }, 1000);
+
+    } catch (err) {
+
+        console.error(err);
+
+        showMessage(
+            err.message,
+            "#ef4444"
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
+
+});
+</script>
+</script>
+
+</body>
+  </html>
