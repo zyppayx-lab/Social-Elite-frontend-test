@@ -457,7 +457,22 @@ Refer & Earn
 
 <script>
 /* Your dashboard JavaScript goes here */
-alert("Dashboard JS is working");
+alert("1");
+
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
+alert("2");
+
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+
+alert("3");
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+alert("4");
 </script>
 
 </body>
