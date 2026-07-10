@@ -455,43 +455,37 @@ Refer & Earn
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
 /* Your dashboard JavaScript goes here */
 
-const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+<script>
+alert("START");
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+try {
 
-(async () => {
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
+  const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
 
-  if (error) {
-    alert("Session Error: " + error.message);
-    return;
-  }
+  const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
-  if (!session) {
-    alert("No session found");
-    return;
-  }
+  alert("Before createClient");
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  alert("After createClient");
+
+} catch (e) {
 
   alert(
-    "Logged in\n\nEmail: " +
-    session.user.email +
-    "\n\nID: " +
-    session.user.id
+    "ERROR:\n\n" +
+    e.message
   );
-})();
-</script>
 
+}
+</script>
 </body>
 
   </html>
