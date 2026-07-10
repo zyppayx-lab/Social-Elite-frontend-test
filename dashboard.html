@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TEST DASHBOARD</title>
+<title>Dashboard | SocialElite</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -17,7 +17,9 @@
 
 <style>
 
-/* PASTE CSS HERE */
+/*==========================
+PASTE CSS HERE
+==========================*/
 *{
 margin:0;
 padding:0;
@@ -53,10 +55,6 @@ padding-bottom:90px;
 
 }
 
-/*==========================
-TOP BAR
-==========================*/
-
 .topbar{
 
 display:flex;
@@ -71,11 +69,11 @@ padding:22px;
 
 .logo{
 
-text-decoration:none;
-
 font-size:28px;
 
 font-weight:800;
+
+text-decoration:none;
 
 color:var(--primary);
 
@@ -89,10 +87,6 @@ text-decoration:none;
 
 }
 
-/*==========================
-DASHBOARD
-==========================*/
-
 .dashboard{
 
 padding:20px;
@@ -102,10 +96,6 @@ max-width:520px;
 margin:auto;
 
 }
-
-/*==========================
-BALANCE CARD
-==========================*/
 
 .balance-card{
 
@@ -119,19 +109,19 @@ padding:35px 20px;
 
 text-align:center;
 
-margin-bottom:18px;
+margin-bottom:20px;
 
-box-shadow:0 20px 40px rgba(0,0,0,.30);
+box-shadow:0 20px 40px rgba(0,0,0,.3);
 
 }
 
 .balance-label{
 
-font-size:15px;
-
 color:var(--muted);
 
-margin-bottom:12px;
+font-size:15px;
+
+margin-bottom:10px;
 
 }
 
@@ -145,31 +135,27 @@ color:var(--primary);
 
 }
 
-/*==========================
-TRANSACTION
-==========================*/
-
 .transaction-btn{
 
 display:block;
 
 text-align:center;
 
+text-decoration:none;
+
+padding:16px;
+
+margin-bottom:22px;
+
+border-radius:16px;
+
 background:#1b1b1b;
 
 border:1px solid var(--border);
 
-padding:16px;
-
-border-radius:16px;
-
-text-decoration:none;
-
 color:#fff;
 
 font-weight:700;
-
-margin-bottom:22px;
 
 transition:.3s;
 
@@ -181,10 +167,6 @@ background:#222;
 
 }
 
-/*==========================
-ACTION BUTTONS
-==========================*/
-
 .quick-actions{
 
 display:grid;
@@ -195,23 +177,23 @@ gap:16px;
 
 .action-card{
 
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+padding:22px;
+
 background:var(--card);
 
 border:1px solid var(--border);
 
 border-radius:18px;
 
-padding:22px;
-
 text-decoration:none;
 
 color:#fff;
-
-display:flex;
-
-align-items:center;
-
-gap:18px;
 
 font-size:18px;
 
@@ -235,10 +217,6 @@ flex:1;
 
 }
 
-/*==========================
-BOTTOM NAVIGATION
-==========================*/
-
 .bottom-nav{
 
 position:fixed;
@@ -251,13 +229,13 @@ width:100%;
 
 height:72px;
 
-background:#101010;
-
-border-top:1px solid var(--border);
-
 display:grid;
 
 grid-template-columns:repeat(4,1fr);
+
+background:#101010;
+
+border-top:1px solid var(--border);
 
 }
 
@@ -303,21 +281,17 @@ font-size:12px;
 
 }
 
-/*==========================
-RESPONSIVE
-==========================*/
-
 @media(max-width:500px){
-
-#balance{
-
-font-size:34px;
-
-}
 
 .logo{
 
 font-size:24px;
+
+}
+
+#balance{
+
+font-size:34px;
 
 }
 
@@ -335,9 +309,7 @@ SocialElite
 </a>
 
 <a href="notification.html" class="notification">
-
 🔔
-
 </a>
 
 </header>
@@ -371,7 +343,9 @@ Transaction History
 
 <div class="quick-actions">
 
-<a href="deposit.html" class="action-card">
+<a
+href="deposit.html"
+class="action-card">
 
 💳
 
@@ -385,8 +359,7 @@ Deposit
 
 <a
 href="purchase-social-media.html"
-class="action-card"
->
+class="action-card">
 
 📱
 
@@ -400,8 +373,7 @@ Social Media Accounts
 
 <a
 href="referral.html"
-class="action-card"
->
+class="action-card">
 
 🎁
 
@@ -419,7 +391,9 @@ Refer & Earn
 
 <nav class="bottom-nav">
 
-<a href="dashboard.html" class="active">
+<a
+href="dashboard.html"
+class="active">
 
 🏠
 
@@ -456,43 +430,100 @@ Refer & Earn
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-alert("START");
 
-try {
+/*==========================
+PASTE JAVASCRIPT HERE
+==========================*/
+"use strict";
 
-  const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+/*=========================================
+SUPABASE
+=========================================*/
 
-const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
 const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
 );
 
-(async () => {
+/*=========================================
+ELEMENTS
+=========================================*/
 
-  alert("1");
+const balance = document.getElementById("balance");
 
-  try {
+/*=========================================
+LOAD USER
+=========================================*/
 
-    alert("2");
+async function loadDashboard(){
 
-    const result = await supabase.auth.getSession();
+    try{
 
-    alert("3");
+        const {
 
-    alert(JSON.stringify(result));
+            data:{ user },
 
-  } catch (e) {
+            error
 
-    alert("ERROR");
+        } = await supabase.auth.getUser();
 
-    alert(e.message);
+        if(error) throw error;
 
-  }
+        if(!user){
 
-})();
+            window.location.href = "login.html";
+
+            return;
+
+        }
+
+        const {
+
+            data:profile,
+
+            error:profileError
+
+        } = await supabase
+
+        .from("profiles")
+
+        .select("wallet_balance")
+
+        .eq("id", user.id)
+
+        .single();
+
+        if(profileError) throw profileError;
+
+        const wallet = Number(profile.wallet_balance || 0);
+
+        balance.textContent =
+        "₦" +
+        wallet.toLocaleString("en-NG",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
+}
+
+loadDashboard();
 </script>
+
 </body>
 
   </html>
