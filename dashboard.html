@@ -485,34 +485,45 @@ LOAD DASHBOARD
 async function loadDashboard() {
 
   const {
-  data: { session }
-} = await supabase.auth.getSession();
+    data: { session }
+  } = await supabase.auth.getSession();
 
-if (!session) {
-  window.location.href = "login.html";
-  return;
-}
+  alert(
+    session
+      ? "Logged in as:\n\n" +
+        session.user.email +
+        "\n\n" +
+        session.user.id
+      : "No session found"
+  );
 
-const { data: profile, error } = await supabase
-  .from("profiles")
-  .select("wallet_balance")
-  .eq("id", session.user.id)
-  .maybeSingle();
+  if (!session) {
+    window.location.href = "login.html";
+    return;
+  }
 
-if (error) {
-  console.error(error);
-  return;
-}
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", session.user.id)
+    .maybeSingle();
 
-const amount = profile?.wallet_balance ?? 0;
+  alert(JSON.stringify(profile));
 
-balance.textContent =
-  "₦" +
-  Number(amount).toLocaleString("en-NG", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-}
+  if (error) {
+    alert(error.message);
+    console.error(error);
+    return;
+  }
+
+  balance.textContent =
+    "₦" +
+    Number(profile.wallet_balance).toLocaleString("en-NG", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+  }
 
 loadDashboard();
 </script>
