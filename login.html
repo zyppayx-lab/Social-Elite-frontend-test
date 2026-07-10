@@ -430,7 +430,6 @@ Create Account
 <script>
 "use strict";
 
-alert("Login JS Loaded");
 
 /*=========================================
 SUPABASE CONFIG
@@ -512,7 +511,6 @@ LOGIN
 form.addEventListener("submit", async function(e){
 
 
-    alert("Submit event fired");
 
 
     e.preventDefault();
@@ -541,9 +539,6 @@ form.addEventListener("submit", async function(e){
         setLoading(true);
 
 
-        alert("Calling Supabase");
-
-
         const { data, error } =
             await supabaseClient.auth.signInWithPassword({
 
@@ -553,9 +548,6 @@ form.addEventListener("submit", async function(e){
 
             });
 
-
-
-        alert("Supabase responded");
 
 
 
@@ -591,9 +583,6 @@ form.addEventListener("submit", async function(e){
         console.error(error);
 
 
-        alert(
-            "ERROR: " + error.message
-        );
 
 
         showMessage(
