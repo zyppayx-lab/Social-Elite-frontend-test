@@ -433,66 +433,101 @@ Create Account
 <script>
 "use strict";
 
+alert("Login JS Loaded");
+
+
 /*=========================================
 SUPABASE CONFIG
 =========================================*/
 
 const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
 const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
-const supabase = window.supabase.createClient(
+
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
+
 
 /*=========================================
 ELEMENTS
 =========================================*/
 
 const form = document.getElementById("loginForm");
+
 const email = document.getElementById("email");
+
 const password = document.getElementById("password");
 
 const loginBtn = document.getElementById("loginBtn");
+
 const btnText = document.getElementById("btnText");
+
 const loader = document.getElementById("loader");
 
 const message = document.getElementById("message");
+
+
+if (!form) {
+
+    alert("loginForm not found");
+
+    throw new Error("loginForm not found");
+
+}
+
 
 /*=========================================
 HELPERS
 =========================================*/
 
-function showMessage(text, color) {
+function showMessage(text, color){
+
     message.textContent = text;
+
     message.style.color = color;
+
 }
 
-function setLoading(state) {
+
+function setLoading(state){
 
     loginBtn.disabled = state;
 
-    loader.classList.toggle("hidden", !state);
+    loader.classList.toggle(
+        "hidden",
+        !state
+    );
 
     btnText.textContent = state
         ? "Logging in..."
         : "Login";
+
 }
+
+
 
 /*=========================================
 LOGIN
 =========================================*/
 
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", async function(e){
+
+
+    alert("Submit event fired");
+
 
     e.preventDefault();
 
-    showMessage("", "");
 
     const userEmail = email.value.trim().toLowerCase();
+
     const userPassword = password.value;
 
-    if (!userEmail || !userPassword) {
+
+    if(!userEmail || !userPassword){
 
         showMessage(
             "Email and password are required.",
@@ -503,12 +538,18 @@ form.addEventListener("submit", async function (e) {
 
     }
 
+
     try {
+
 
         setLoading(true);
 
+
+        alert("Calling Supabase");
+
+
         const { data, error } =
-            await supabase.auth.signInWithPassword({
+            await supabaseClient.auth.signInWithPassword({
 
                 email: userEmail,
 
@@ -516,38 +557,68 @@ form.addEventListener("submit", async function (e) {
 
             });
 
-        if (error) {
+
+
+        alert("Supabase responded");
+
+
+
+        if(error){
+
             throw error;
+
         }
+
+
 
         showMessage(
             "Login successful.",
             "#22c55e"
         );
 
-        setTimeout(function () {
 
-            window.location.href = "dashboard.html";
 
-        }, 1000);
+        setTimeout(function(){
 
-    } catch (error) {
+
+            window.location.href =
+                "dashboard.html";
+
+
+        },1000);
+
+
+
+    }catch(error){
+
 
         console.error(error);
 
+
+        alert(
+            "ERROR: " + error.message
+        );
+
+
         showMessage(
-            error.message ||
-            "Login failed.",
+            error.message,
             "#ef4444"
         );
 
-    } finally {
+
+
+    }finally{
+
 
         setLoading(false);
 
+
     }
 
+
+
 });
+
 
 </script>
 
