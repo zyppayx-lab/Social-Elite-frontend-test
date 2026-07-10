@@ -466,25 +466,36 @@ try {
 
   const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
 
-  const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
-  alert("Before createClient");
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
-  const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+(async () => {
 
-  alert("After createClient");
+  alert("1");
 
-} catch (e) {
+  try {
 
-  alert(
-    "ERROR:\n\n" +
-    e.message
-  );
+    alert("2");
 
-}
+    const result = await supabase.auth.getSession();
+
+    alert("3");
+
+    alert(JSON.stringify(result));
+
+  } catch (e) {
+
+    alert("ERROR");
+
+    alert(e.message);
+
+  }
+
+})();
 </script>
 </body>
 
