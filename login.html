@@ -482,15 +482,19 @@ function setLoading(state) {
 LOGIN
 =========================================*/
 
-form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
+
+    alert("Form submitted");
 
     showMessage("", "");
 
     setLoading(true);
 
     try {
+
+        alert("About to login");
 
         const { error } = await supabase.auth.signInWithPassword({
 
@@ -500,40 +504,21 @@ form.addEventListener("submit", async (e) => {
 
         });
 
+        alert("Login request finished");
+
         if (error) throw error;
 
-        // Verify session exists
-        const {
-            data: { session }
-        } = await supabase.auth.getSession();
+        alert("Login successful");
 
-        if (!session) {
-            showMessage(
-                "Login succeeded but no session was created.",
-                "#ef4444"
-            );
-            return;
-        }
-
-        showMessage(
-            "Login successful.",
-            "#22c55e"
-        );
-
-        setTimeout(() => {
-
-            window.location.href = "dashboard.html";
-
-        }, 800);
+        window.location.href = "dashboard.html";
 
     } catch (err) {
 
+        alert("ERROR: " + err.message);
+
         console.error(err);
 
-        showMessage(
-            err.message || "Login failed.",
-            "#ef4444"
-        );
+        showMessage(err.message, "#ef4444");
 
     } finally {
 
@@ -542,7 +527,6 @@ form.addEventListener("submit", async (e) => {
     }
 
 });
-
 </script>
 
 </body>
