@@ -444,130 +444,23 @@ Create Account
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-/* ==========================
-JAVASCRIPT PLACEHOLDER
-========================== */
-"use strict";
-
-/*=========================================
-SUPABASE
-=========================================*/
+alert("1");
 
 const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+alert("2");
+
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+
+alert("3");
 
 const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
 
-/*=========================================
-ELEMENTS
-=========================================*/
-
-const form = document.getElementById("loginForm");
-
-const email = document.getElementById("email");
-
-const password = document.getElementById("password");
-
-const loginBtn = document.getElementById("loginBtn");
-
-const btnText = document.getElementById("btnText");
-
-const loader = document.getElementById("loader");
-
-const message = document.getElementById("message");
-
-/*=========================================
-HELPERS
-=========================================*/
-
-function showMessage(text, color){
-
-    message.textContent = text;
-
-    message.style.color = color;
-
-}
-
-function setLoading(state){
-
-    loginBtn.disabled = state;
-
-    loader.classList.toggle("hidden", !state);
-
-    btnText.textContent = state
-        ? "Logging in..."
-        : "Login";
-
-}
-
-/*=========================================
-LOGIN
-=========================================*/
-
-form.addEventListener("submit", async (e)=>{
-
-    e.preventDefault();
-
-    showMessage("", "");
-
-    setLoading(true);
-
-    try{
-
-        const { data, error } =
-        await supabase.auth.signInWithPassword({
-
-            email: email.value.trim().toLowerCase(),
-
-            password: password.value
-
-        });
-
-        if(error) throw error;
-
-        if(!data.session){
-
-            throw new Error("Login failed.");
-
-        }
-
-        showMessage(
-            "Login successful.",
-            "#22c55e"
-        );
-
-        setTimeout(()=>{
-
-            window.location.href = "dashboard.html";
-
-        },800);
-
-    }
-
-    catch(err){
-
-        console.error(err);
-
-        showMessage(
-            err.message,
-            "#ef4444"
-        );
-
-    }
-
-    finally{
-
-        setLoading(false);
-
-    }
-
-});
+alert("4");
+    
 </script>
 
 </body>
