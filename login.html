@@ -451,115 +451,36 @@ SUPABASE CONFIG
 
 console.log("Login script loaded");
 
-const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
+        const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
-if (!window.supabase) {
-    alert("Supabase library failed to load.");
-    throw new Error("Supabase library not loaded.");
-}
+document.getElementById("message").textContent = "JavaScript loaded.";
 
 const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY,
-    {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-        }
-    }
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
-/* ==========================
-ELEMENTS
-========================== */
+document.getElementById("loginForm").onsubmit = async (e) => {
+  e.preventDefault();
 
-const form = document.getElementById("loginForm");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const loginBtn = document.getElementById("loginBtn");
-const btnText = document.getElementById("btnText");
-const loader = document.getElementById("loader");
-const message = document.getElementById("message");
+  document.getElementById("message").textContent = "Logging in...";
 
-/* ==========================
-HELPERS
-========================== */
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: document.getElementById("email").value.trim(),
+    password: document.getElementById("password").value
+  });
 
-function showMessage(text, color = "#ef4444") {
-    message.textContent = text;
-    message.style.color = color;
-}
+  if (error) {
+    document.getElementById("message").textContent = error.message;
+    return;
+  }
 
-function setLoading(state) {
-    loginBtn.disabled = state;
-    loader.classList.toggle("hidden", !state);
-    btnText.textContent = state ? "Logging in..." : "Login";
-}
-
-/* ==========================
-CHECK SESSION
-========================== */
-
-(async () => {
-    try {
-        const { data, error } = await supabase.auth.getSession();
-
-        if (error) {
-            console.error(error);
-            return;
-        }
-
-        if (data.session) {
-            console.log("Existing session found.");
-            window.location.href = "dashboard.html";
-        }
-    } catch (err) {
-        console.error(err);
-    }
-})();
-
-/* ==========================
-LOGIN
-========================== */
-
-form.addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    console.log("Login button clicked");
-
-    showMessage("");
-    setLoading(true);
-
-    try {
-
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email.value.trim().toLowerCase(),
-            password: password.value
-        });
-
-        if (error) throw error;
-
-        console.log("LOGIN SUCCESS");
-        console.log(data);
-
-        showMessage("Login successful!", "#22c55e");
-
-        localStorage.setItem(
-            "access_token",
-            data.session.access_token
-        );
-
-        localStorage.setItem(
-            "refresh_token",
-            data.session.refresh_token
-        );
-
-        setTimeout(() => {
-            window.location.href = "dashboard.html";
-        }, 1000);
+  document.getElementById("message").textContent = "Success!";
+  localStorage.setItem("access_token", data.session.access_token);
+  location.href = "dashboard.html";
+}; 1000);
 
     } catch (err) {
 
