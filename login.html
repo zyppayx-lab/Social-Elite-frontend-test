@@ -441,41 +441,112 @@ Create Account
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+"use strict";
 
-<script>
+/*=========================================
+SUPABASE CONFIG
+=========================================*/
+
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+
 const supabase = window.supabase.createClient(
-  "https://dohxtukzxopwkvxeppdl.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvaHh0dWt6eG9wd2t2eGVwcGRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxOTA5NzksImV4cCI6MjA5ODc2Njk3OX0.EvzBxG--UmAIDL6dX-cU878tjRRHacazKv9mbEsGgWY"
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
+    }
 );
 
-(async () => {
+/*=========================================
+ELEMENTS
+=========================================*/
 
-  alert("1");
+const form = document.getElementById("loginForm");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
 
-  try {
+const loginBtn = document.getElementById("loginBtn");
+const btnText = document.getElementById("btnText");
+const loader = document.getElementById("loader");
+const message = document.getElementById("message");
 
-    const result = await supabase.auth.signInWithPassword({
+/*=========================================
+HELPERS
+=========================================*/
 
-      email: "ikechukwufavour220@gmail.com",
+function showMessage(text, color) {
+    message.textContent = text;
+    message.style.color = color;
+}
 
-      password: "Chiboy@2011"
+function setLoading(state) {
+    loginBtn.disabled = state;
+    loader.classList.toggle("hidden", !state);
+    btnText.textContent = state ? "Logging in..." : "Login";
+}
 
-    });
+/*=========================================
+LOGIN
+=========================================*/
 
-    alert("2");
+form.addEventListener("submit", async (e) => {
 
-    alert(JSON.stringify(result));
+    e.preventDefault();
 
-  } catch (e) {
+    showMessage("", "");
 
-    alert("ERROR");
+    setLoading(true);
 
-    alert(e.message);
+    try {
 
-  }
+        const { data, error } = await supabase.auth.signInWithPassword({
 
-})();
+            email: email.value.trim().toLowerCase(),
+
+            password: password.value
+
+        });
+
+        if (error) throw error;
+
+        if (!data.session) {
+            throw new Error("No session returned.");
+        }
+
+        // Ensure session is stored
+        const { error: sessionError } = await supabase.auth.setSession({
+            access_token: data.session.access_token,
+            refresh_token: data.session.refresh_token
+        });
+
+        if (sessionError) throw sessionError;
+
+        showMessage("Login successful.", "#22c55e");
+
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 500);
+
+    } catch (err) {
+
+        console.error(err);
+
+        showMessage(err.message, "#ef4444");
+
+    } finally {
+
+        setLoading(false);
+
+    }
+
+});
 </script>
 </body>
 </html>
