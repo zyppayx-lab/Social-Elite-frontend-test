@@ -444,30 +444,38 @@ Create Account
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-alert("1");
+const supabase = window.supabase.createClient(
+  "https://dohxtukzxopwkvxeppdl.supabase.co",
+  "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7"
+);
 
-const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+(async () => {
 
-const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+  alert("1");
 
-alert("2");
+  try {
 
-try {
+    const result = await supabase.auth.signInWithPassword({
 
-    const supabase = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
+      email: "ikechukwufavour220@gmail.com",
 
-    alert("3");
+      password: "Chiboy@2011"
 
-} catch (e) {
+    });
 
-    alert("CREATE CLIENT ERROR");
+    alert("2");
+
+    alert(JSON.stringify(result));
+
+  } catch (e) {
+
+    alert("ERROR");
 
     alert(e.message);
 
-}
+  }
+
+})();
 </script>
 </body>
 </html>
