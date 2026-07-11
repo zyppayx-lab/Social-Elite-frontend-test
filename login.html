@@ -450,20 +450,11 @@ SUPABASE CONFIG
 ========================== */
 
 const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
-
-const SUPABASE_ANON_KEY =
-"sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
 const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY,
-    {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-        }
-    }
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
 /* ==========================
@@ -473,7 +464,6 @@ ELEMENTS
 const form = document.getElementById("loginForm");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
-
 const loginBtn = document.getElementById("loginBtn");
 const btnText = document.getElementById("btnText");
 const loader = document.getElementById("loader");
@@ -484,88 +474,62 @@ HELPERS
 ========================== */
 
 function showMessage(text, color) {
-    message.textContent = text;
-    message.style.color = color;
+  message.textContent = text;
+  message.style.color = color;
 }
 
-function setLoading(state) {
-
-    loginBtn.disabled = state;
-
-    loader.classList.toggle("hidden", !state);
-
-    btnText.textContent = state
-        ? "Logging in..."
-        : "Login";
+function setLoading(loading) {
+  loginBtn.disabled = loading;
+  loader.classList.toggle("hidden", !loading);
+  btnText.textContent = loading ? "Logging in..." : "Login";
 }
 
 /* ==========================
-CHECK EXISTING SESSION
+CHECK SESSION
 ========================== */
 
 (async () => {
+  const { data } = await supabase.auth.getSession();
 
-    const {
-        data: { session }
-    } = await supabase.auth.getSession();
-
-    if (session) {
-        window.location.replace("dashboard.html");
-    }
-
+  if (data.session) {
+    window.location.href = "dashboard.html";
+  }
 })();
 
 /* ==========================
 LOGIN
 ========================== */
 
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  showMessage("", "");
+  setLoading(true);
 
-    showMessage("", "");
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.value.trim().toLowerCase(),
+      password: password.value
+    });
 
-    setLoading(true);
+    if (error) throw error;
 
-    try {
+    console.log("Access Token:", data.session.access_token);
+    console.log("Refresh Token:", data.session.refresh_token);
+    console.log("User:", data.user);
 
-        const { data, error } =
-        await supabase.auth.signInWithPassword({
+    showMessage("Login successful!", "#22c55e");
 
-            email: email.value.trim().toLowerCase(),
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 500);
 
-            password: password.value
-
-        });
-
-        if (error) throw error;
-
-        if (!data.session) {
-            throw new Error("Login failed.");
-        }
-
-        showMessage(
-            "Login successful...",
-            "#22c55e"
-        );
-
-        window.location.replace("dashboard.html");
-
-    } catch (err) {
-
-        console.error(err);
-
-        showMessage(
-            err.message,
-            "#ef4444"
-        );
-
-    } finally {
-
-        setLoading(false);
-
-    }
-
+  } catch (err) {
+    console.error(err);
+    showMessage(err.message, "#ef4444");
+  } finally {
+    setLoading(false);
+  }
 });
     </script>
 </body>
