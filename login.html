@@ -441,11 +441,13 @@ Create Account
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
 "use strict";
 
-/*=========================================
+/* ==========================
 SUPABASE CONFIG
-=========================================*/
+========================== */
 
 const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
 
@@ -464,9 +466,9 @@ const supabase = window.supabase.createClient(
     }
 );
 
-/*=========================================
+/* ==========================
 ELEMENTS
-=========================================*/
+========================== */
 
 const form = document.getElementById("loginForm");
 const email = document.getElementById("email");
@@ -477,9 +479,9 @@ const btnText = document.getElementById("btnText");
 const loader = document.getElementById("loader");
 const message = document.getElementById("message");
 
-/*=========================================
+/* ==========================
 HELPERS
-=========================================*/
+========================== */
 
 function showMessage(text, color) {
     message.textContent = text;
@@ -487,16 +489,37 @@ function showMessage(text, color) {
 }
 
 function setLoading(state) {
+
     loginBtn.disabled = state;
+
     loader.classList.toggle("hidden", !state);
-    btnText.textContent = state ? "Logging in..." : "Login";
+
+    btnText.textContent = state
+        ? "Logging in..."
+        : "Login";
 }
 
-/*=========================================
-LOGIN
-=========================================*/
+/* ==========================
+CHECK EXISTING SESSION
+========================== */
 
-form.addEventListener("submit", async (e) => {
+(async () => {
+
+    const {
+        data: { session }
+    } = await supabase.auth.getSession();
+
+    if (session) {
+        window.location.replace("dashboard.html");
+    }
+
+})();
+
+/* ==========================
+LOGIN
+========================== */
+
+form.addEventListener("submit", async function (e) {
 
     e.preventDefault();
 
@@ -506,7 +529,8 @@ form.addEventListener("submit", async (e) => {
 
     try {
 
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } =
+        await supabase.auth.signInWithPassword({
 
             email: email.value.trim().toLowerCase(),
 
@@ -517,28 +541,24 @@ form.addEventListener("submit", async (e) => {
         if (error) throw error;
 
         if (!data.session) {
-            throw new Error("No session returned.");
+            throw new Error("Login failed.");
         }
 
-        // Ensure session is stored
-        const { error: sessionError } = await supabase.auth.setSession({
-            access_token: data.session.access_token,
-            refresh_token: data.session.refresh_token
-        });
+        showMessage(
+            "Login successful...",
+            "#22c55e"
+        );
 
-        if (sessionError) throw sessionError;
-
-        showMessage("Login successful.", "#22c55e");
-
-        setTimeout(() => {
-            window.location.href = "dashboard.html";
-        }, 500);
+        window.location.replace("dashboard.html");
 
     } catch (err) {
 
         console.error(err);
 
-        showMessage(err.message, "#ef4444");
+        showMessage(
+            err.message,
+            "#ef4444"
+        );
 
     } finally {
 
@@ -547,6 +567,6 @@ form.addEventListener("submit", async (e) => {
     }
 
 });
-</script>
+    </script>
 </body>
 </html>
