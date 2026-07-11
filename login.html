@@ -446,9 +446,28 @@ Create Account
 <script>
 alert("1");
 
-alert(typeof window.supabase);
+const SUPABASE_URL = "https://dohxtukzxopwkvxeppdl.supabase.co";
+
+const SUPABASE_ANON_KEY = "sb_publishable_KHU_8oYCtAgiBkWM_ShXmw_nO7FKnG7";
 
 alert("2");
+
+try {
+
+    const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+    alert("3");
+
+} catch (e) {
+
+    alert("CREATE CLIENT ERROR");
+
+    alert(e.message);
+
+}
 </script>
 </body>
 </html>
